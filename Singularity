@@ -1,0 +1,46 @@
+# Copyright (c) 2022 NVIDIA Corporation.  All rights reserved. 
+
+Bootstrap: docker
+FROM: nvcr.io/nvidia/nvhpc:22.7-devel-cuda_multi-ubuntu20.04
+
+%environment
+    export XDG_RUNTIME_DIR=
+    export PATH="$PATH:/usr/local/bin:/opt/anaconda3/bin:/usr/bin"
+
+%post
+    build_tmp=$(mktemp -d) && cd ${build_tmp}
+
+    apt-get -y update
+    apt-get -y dist-upgrade 
+    DEBIAN_FRONTEND=noninteractive apt-get -yq install --no-install-recommends \
+	    m4 vim-nox emacs-nox nano zip\
+ 	    python3-pip python3-setuptools git-core inotify-tools \
+	    curl git-lfs \
+	    build-essential
+    rm -rf /var/lib/apt/cache/* 
+
+    pip3 install --upgrade pip
+    apt-get update -y
+    apt-get -y install git nvidia-modprobe
+    pip3 install jupyterlab
+    pip3 install ipywidgets
+    pip3 install jupyter netcdf4
+
+    apt-get install --no-install-recommends -y build-essential 
+
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh 
+    bash Miniconda3-latest-Linux-x86_64.sh -b -p /opt/anaconda3 
+    rm Miniconda3-latest-Linux-x86_64.sh 
+    /opt/anaconda3/bin/conda install -y -q netcdf4
+
+    cd /
+    rm -rf ${build_tmp}
+
+%files
+    _profiler/ /labs
+
+%runscript
+    "$@"
+
+%labels
+    AUTHOR mozhgank

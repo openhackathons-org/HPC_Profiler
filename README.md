@@ -58,7 +58,7 @@ Once inside the container, open the jupyter lab in browser: http://localhost:888
 ### Singularity Container
 
 To build the singularity container, run: 
-`sudo singularity build _profiler.simg Singularity`
+`sudo singularity build _profiler.simg Singularity` . If you do not have `sudo` rights, you can build the singularity container with `--fakeroot` option: `singularity build --fakeroot _profiler.simg Singularity`
 
 and copy the files to your local machine to make sure changes are stored locally:
 `singularity run _profiler.simg cp -rT /labs ~/labs`

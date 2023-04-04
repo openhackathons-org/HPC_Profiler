@@ -76,12 +76,12 @@ The lab optionally may also add custom license in case of any deviation from the
 Adding a new feature/lab will follow a forking workflow. Which means a feature branch development will happen on a forked repo which later gets merged into our original project (GPUHackathons.org) repository.
 
 
-![Git Branching Workflow](misc/images/git_branching.jpg)
+![Git Branching Workflow](_profiler/jupyter_notebook/images/git_branching.jpg)
 
 The 5 main steps depicted in image above are as follows:
 1. Fork: To create a new lab/feature the GPUHackathons.org repository must be forked. Fork will create a snapshot of GPUHackathons.org repository at the time it was forked. Any new feature/lab that will be developed should be based on the develop branch of the repository.
 2.  Clone: Developer can than clone this new repository to local machine
-Create Feature Branch: Create a new branch with a feature name in which your changes will be done. Recommend naming convention of feature branch is naming convention for branch: hpc-<feature_name>,hpc-ai-<feature_name>, ai-<feature_name>. The new changes that developer makes can be added, committed and pushed
+Create Feature Branch: Create a new branch with a feature name in which your changes will be done. Recommend naming convention of feature branch is naming convention for branch: profiler-<feature_name>. The new changes that developer makes can be added, committed and pushed
 3. Push: After the changes are committed, the developer pushes the changes to the remote branch. Push command helps the local changes to github repository
 4. Pull: Submit a pull request. Upon receiving pull request a Hackathon team reviewer/owner will review the changes and upon accepting it can be merged into the develop branch of GpuHacakthons.org
 

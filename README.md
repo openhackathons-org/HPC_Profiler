@@ -1,4 +1,4 @@
-# Nsight Tool Tutorial
+# Profiling with NVIDIA Nsight Tools Bootcamp
 This repository contains learning materials and exercises for NVIDIA Nsight Tools. Gola is to learn how to profile your application with NVIDIA Nsight Systems,Compute and NVTX API calls to find performance limiters and bottlenecks and apply incremental parallelization strategies. The content was tested on **NVIDIA driver 515.65**.
 
 - Introduction: Overview of profiling tools and Mini Weather application

@@ -2,7 +2,7 @@
 
 CC := nvc++
 CFLAGS := -O3 -w
-ACCFLAGS := -ta=tesla -Minfo=accel
+ACCFLAGS := -acc -gpu=mem:managed,ccnative -Minfo=accel
 
 FC := nvfortran
 FFLAGS := -fast

@@ -3,7 +3,6 @@
 CC := nvc++
 CFLAGS := -O3 -w -ldl
 ACCFLAGS := -Minfo=accel
-NVTXLIB := -I/opt/nvidia/hpc_sdk/Linux_x86_64/22.7/cuda/11.0/include
 
 FC := nvfortran
 FFLAGS := -fast

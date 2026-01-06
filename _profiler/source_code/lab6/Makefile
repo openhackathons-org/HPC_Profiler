@@ -1,9 +1,8 @@
 # Copyright (c) 2022 NVIDIA Corporation.  All rights reserved. 
 
 CC := nvcc
-CFLAGS := -x cu -lnvToolsExt -lineinfo
+CFLAGS := -x cu -lnvToolsExt -lineinfo -arch=native
 ACCFLAGS := -Minfo=accel
-NVTXLIB := -I/opt/nvidia/hpc_sdk/Linux_x86_64/22.7/cuda/11.0/include
 
 FC := nvfortran
 FFLAGS := -fast

@@ -1,7 +1,7 @@
 # Copyright (c) 2022 NVIDIA Corporation.  All rights reserved. 
 
 CC := nvcc
-CFLAGS := -x cu -lnvToolsExt -lineinfo -arch=native
+CFLAGS := -x cu -lineinfo -arch=native
 ACCFLAGS := -Minfo=accel
 
 FC := nvfortran

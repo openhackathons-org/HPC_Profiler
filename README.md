@@ -41,17 +41,17 @@ To build a docker container, run:
 For instance:
 `sudo docker build -t hpc-profiler:latest .`
 
-The code labs have been written using Jupyter lab and a Dockerfile has been built to simplify deployment. In order to serve the docker instance for a student, it is necessary to expose port 8000 from the container, for instance, the following command would expose port 8000 inside the container as port 8000 on the lab machine:
+The code labs have been written using Jupyter lab and a Dockerfile has been built to simplify deployment. In order to serve the docker instance for a student, it is necessary to expose port 8888 from the container, for instance, the following command would expose port 8888 inside the container as port 8888 on the lab machine:
 
-`sudo docker run --rm -it --gpus=all -p 8888:8888 hpc-profiler:latest`
+```bash
+docker run --rm -it --gpus=all -p 8888:8888 \
+    --cap-add=SYS_ADMIN --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
+    -v /path/to/_profiler:/workspace/_profiler \
+    -w /workspace/_profiler \
+    hpc-profiler:latest
+```
 
-When this command is run, you can browse to the serving machine on port 8000 using any web browser to access the labs. For instance, from if they are running on the local machine the web browser should be pointed to http://localhost:8000. The `--gpus` flag is used to enable `all` NVIDIA GPUs during container runtime. The `--rm` flag is used to clean an temporary images created during the running of the container. The `-it` flag enables killing the jupyter server with `ctrl-c`. This command may be customized for your hosting environment.
-
-
-Then, inside the container launch the Jupyter lab assigning the port you opened:
-
-`jupyter-lab --ip 0.0.0.0 --port 8888 --no-browser --allow-root`
-
+When this command is run, you can browse to the serving machine on port 8888 using any web browser to access the labs. For instance, from if they are running on the local machine the web browser should be pointed to http://localhost:8888. The `--gpus` flag is used to enable `all` NVIDIA GPUs during container runtime. The `--rm` flag is used to clean an temporary images created during the running of the container. The `-it` flag enables killing the jupyter server with `ctrl-c`. This command may be customized for your hosting environment.
 
 Once inside the container, open the jupyter lab in browser: http://localhost:8888, and start the lab by clicking on the `_start_profiling.ipynb` notebook.
 

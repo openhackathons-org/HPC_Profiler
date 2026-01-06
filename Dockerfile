@@ -40,7 +40,7 @@ RUN apt-get update && \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN uv pip install jupyterlab
+RUN uv pip install jupyterlab==4.5.1
 
 COPY _profiler /_profiler
 

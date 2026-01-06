@@ -37,5 +37,3 @@ jacobi_step8: jacobi_step8.cpp
     
 clean:
 	rm -f *.o jacobi_step1 jacobi_step2 jacobi_step3 jacobi_step4 jacobi_step5 jacobi_step6 jacobi_step7 jacobi_step8 jacobi *.nsys-rep *.sqlite *.ncu-rep
-
-

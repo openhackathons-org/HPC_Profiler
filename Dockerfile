@@ -42,8 +42,4 @@ RUN apt-get update && \
 
 RUN uv pip install jupyterlab==4.5.1
 
-COPY _profiler /_profiler
-
-WORKDIR /_profiler
-
 CMD ["jupyter-lab", "--no-browser", "--allow-root", "--ip=0.0.0.0", "--port=8888", "--ServerApp.token=", "--ServerApp.password=", "--notebook-dir=/_profiler"]

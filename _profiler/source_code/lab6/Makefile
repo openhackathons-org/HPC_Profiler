@@ -9,7 +9,7 @@ FFLAGS := -fast
 LDFLAGS := -lnvhpcwrapnvtx 
     
 jacobi: jacobi.cpp
-	${CC} -o jacobi jacobi.cpp  
+	${CC} -o jacobi ${CFLAGS} jacobi.cpp  
 
 jacobi_step1: jacobi_step1.cpp
 	${CC} -o jacobi_step1 ${CFLAGS} jacobi_step1.cpp

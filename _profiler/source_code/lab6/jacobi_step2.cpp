@@ -5,7 +5,7 @@
 #include <cmath>
 #include <limits>
 #include <ctime>
-#include <nvToolsExt.h>
+#include <nvtx3/nvToolsExt.h>
 
 #define N 64
 

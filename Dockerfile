@@ -4,37 +4,42 @@
 # To run: $ sudo docker run --rm -it --gpus=all -p 8888:8888 profiling:latest
 # Finally, open http://127.0.0.1:8888/
 
-FROM nvcr.io/nvidia/nvhpc:22.7-devel-cuda_multi-ubuntu20.04
+FROM nvcr.io/nvidia/nvhpc:25.11-devel-cuda_multi-ubuntu22.04
 
-RUN apt-get update -y && \
-    apt-get dist-upgrade -y && \
-    DEBIAN_FRONTEND=noninteractive apt-get -yq install  --no-install-recommends \
-    m4 vim-nox emacs-nox nano zip\
-    python3-pip python3-setuptools git-core inotify-tools \
-    curl git-lfs nginx\
-    build-essential openssh-server openssh-client && \
-    rm -rf /var/lib/apt/cache/* 
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-RUN apt-get update 
-RUN apt-get install --no-install-recommends -y python3
-RUN pip3 install --upgrade pip
-RUN apt-get update -y        
-RUN apt-get install -y git nvidia-modprobe
-RUN pip3 install jupyterlab
-# Install required python packages
-RUN pip3 install ipywidgets
-RUN pip3 install netcdf4
+ENV DEBIAN_FRONTEND=noninteractive
+ENV UV_SYSTEM_PYTHON=1
 
-RUN apt-get install --no-install-recommends -y build-essential
+# Set NVIDIA HPC SDK environment variables
+ENV NVHPC_ROOT=/opt/nvidia/hpc_sdk/Linux_x86_64/25.11
+ENV CUDA_HOME=${NVHPC_ROOT}/cuda/12.9
+ENV CUDA_PATH=${CUDA_HOME}/targets/x86_64-linux
 
-ENV PATH="$PATH:/usr/local/bin:/opt/anaconda3/bin:/usr/bin" 
+# Update PATH with compiler and CUDA binaries
+ENV PATH=${NVHPC_ROOT}/compilers/bin:${CUDA_PATH}/bin:${PATH}
 
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
-    bash Miniconda3-latest-Linux-x86_64.sh -b -p /opt/anaconda3  && \
-    rm Miniconda3-latest-Linux-x86_64.sh && \
-    /opt/anaconda3/bin/conda install -y -q netcdf4
+# Update library paths
+ENV LD_LIBRARY_PATH=${CUDA_PATH}/lib:${CUDA_PATH}/lib64:${NVHPC_ROOT}/compilers/lib:${LD_LIBRARY_PATH}
 
-ADD     _profiler /labs
+# Update C/C++ include paths
+ENV CPATH=${CUDA_PATH}/include:${CPATH}
 
-WORKDIR /labs
-CMD jupyter-lab --no-browser --allow-root --ip=0.0.0.0 --port=8888 --NotebookApp.token="" --notebook-dir=/labs
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    python3 \
+    python3-pip \
+    python3-dev \
+    git \
+    vim \
+    curl \
+    wget \
+    zip \
+    unzip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN uv pip install jupyterlab==4.5.1
+
+CMD ["jupyter-lab", "--no-browser", "--allow-root", "--ip=0.0.0.0", "--port=8888", "--ServerApp.token=", "--ServerApp.password=", "--notebook-dir=/_profiler"]

@@ -35,3 +35,5 @@ RUN apt-get update && \
 
 # Install JupyterLab
 RUN uv pip install jupyterlab
+
+CMD ["jupyter-lab", "--no-browser", "--allow-root", "--ip=0.0.0.0", "--port=8888", "--NotebookApp.token=", "--notebook-dir=/workspace/_profiler"]
